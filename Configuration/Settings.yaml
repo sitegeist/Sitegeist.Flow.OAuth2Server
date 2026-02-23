@@ -1,0 +1,7 @@
+Sitegeist:
+  Flow:
+    OAuth2Server:
+      # (absolute) path to the private key
+      privateKeyPath: ''
+      # encryption key
+      encryptionKey: ''

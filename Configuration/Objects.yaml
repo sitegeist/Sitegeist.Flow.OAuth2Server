@@ -1,0 +1,4 @@
+League\OAuth2\Server\Repositories\ClientRepositoryInterface:
+  className: 'Sitegeist\Flow\OAuth2Server\Infrastructure\FlowClientEntityRepository'
+League\OAuth2\Server\Repositories\ScopeRepositoryInterface:
+  className: 'Sitegeist\Flow\OAuth2Server\Infrastructure\FlowScopeEntityRepository'

@@ -10,10 +10,11 @@ use Neos\Flow\Persistence\Repository;
 use Neos\Flow\Security\Cryptography\HashService;
 
 /**
- * @method findOneByIdentifier(string $clientIdentifier): ?FlowClientEntity
+ * @method ?Client findOneByIdentifier(string $clientIdentifier)
+ * @method ?Client findByIdentifier(string $clientIdentifier)
  */
 #[Flow\Scope('singleton')]
-class FlowClientEntityRepository extends Repository implements ClientRepositoryInterface
+class ClientRepository extends Repository implements ClientRepositoryInterface
 {
     /**
      * @Flow\Inject
@@ -21,11 +22,11 @@ class FlowClientEntityRepository extends Repository implements ClientRepositoryI
      */
     protected $hashService;
 
-    public function getClientEntity($clientIdentifier): ?FlowClientEntity
+    public function getClientEntity($clientIdentifier): ?Client
     {
         $client = $this->findOneByIdentifier($clientIdentifier);
 
-        return $client instanceof FlowClientEntity ? $client : null;
+        return $client instanceof Client ? $client : null;
     }
 
     public function validateClient($clientIdentifier, $clientSecret, $grantType): bool
@@ -36,8 +37,12 @@ class FlowClientEntityRepository extends Repository implements ClientRepositoryI
             return false;
         }
 
-        if (!$clientEntity->isConfidential()) {
+        if (!$clientEntity->isConfidential() || !$clientEntity->getSecret()) {
             return true;
+        }
+
+        if (!$clientSecret) {
+            return false;
         }
 
         return $this->hashService->validatePassword(

@@ -1,4 +1,10 @@
+League\OAuth2\Server\Repositories\AccessTokenRepositoryInterface:
+  className: 'Sitegeist\Flow\OAuth2Server\Infrastructure\AccessTokenRepository'
+League\OAuth2\Server\Repositories\AuthCodeRepositoryInterface:
+  className: 'Sitegeist\Flow\OAuth2Server\Infrastructure\AuthCodeRepository'
 League\OAuth2\Server\Repositories\ClientRepositoryInterface:
-  className: 'Sitegeist\Flow\OAuth2Server\Infrastructure\FlowClientEntityRepository'
+  className: 'Sitegeist\Flow\OAuth2Server\Infrastructure\ClientRepository'
+League\OAuth2\Server\Repositories\RefreshTokenRepositoryInterface:
+  className: 'Sitegeist\Flow\OAuth2Server\Infrastructure\RefreshTokenRepository'
 League\OAuth2\Server\Repositories\ScopeRepositoryInterface:
-  className: 'Sitegeist\Flow\OAuth2Server\Infrastructure\FlowScopeEntityRepository'
+  className: 'Sitegeist\Flow\OAuth2Server\Infrastructure\ScopeRepository'

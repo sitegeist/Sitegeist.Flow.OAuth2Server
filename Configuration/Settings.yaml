@@ -5,3 +5,8 @@ Sitegeist:
       privateKeyPath: ''
       # encryption key
       encryptionKey: ''
+      ttls:
+        accessToken: 'PT1H'
+        authCode: 'PT10M'
+        refreshToken: 'P1M'
+      authenticationProvider: ''

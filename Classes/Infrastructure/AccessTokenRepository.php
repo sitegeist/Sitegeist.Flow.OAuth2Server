@@ -8,26 +8,24 @@ use League\OAuth2\Server\Entities\AccessTokenEntityInterface;
 use League\OAuth2\Server\Entities\ClientEntityInterface;
 use League\OAuth2\Server\Entities\ScopeEntityInterface;
 use League\OAuth2\Server\Repositories\AccessTokenRepositoryInterface;
-use League\OAuth2\Server\Repositories\ClientRepositoryInterface;
 use Neos\Flow\Annotations as Flow;
 use Neos\Flow\Persistence\Repository;
-use Neos\Flow\Security\Cryptography\HashService;
 
 /**
- * @method findOneByIdentifier(string $clientIdentifier): ?FlowClientEntity
+ * @method ?AccessToken findByIdentifier(string $clientIdentifier)
  */
 #[Flow\Scope('singleton')]
-class FlowAccessTokenEntityRepository extends Repository implements AccessTokenRepositoryInterface
+class AccessTokenRepository extends Repository implements AccessTokenRepositoryInterface
 {
-
     /**
      * Create a new access token
      *
      * @param ScopeEntityInterface[] $scopes
+     * @param int|string|null $userIdentifier
      */
-    public function getNewToken(ClientEntityInterface $clientEntity, array $scopes, int|string|null $userIdentifier = null): FlowAccessTokenEntity
+    public function getNewToken(ClientEntityInterface $clientEntity, array $scopes, $userIdentifier = null): AccessToken
     {
-        $token = new FlowAccessTokenEntity();
+        $token = new AccessToken();
         $token->setClient($clientEntity);
         $token->setUserIdentifier($userIdentifier);
         foreach ($scopes as $scope) {
@@ -41,13 +39,25 @@ class FlowAccessTokenEntityRepository extends Repository implements AccessTokenR
         $this->add($accessTokenEntity);
     }
 
-    public function revokeAccessToken($tokenId)
+    public function revokeAccessToken($tokenId): void
     {
-        // TODO: Implement revokeAccessToken() method.
+        $token = $this->requireToken($tokenId);
+        $token->setIsRevoked(true);
+        $this->update($token);
     }
 
-    public function isAccessTokenRevoked($tokenId)
+    public function isAccessTokenRevoked($tokenId): bool
     {
-        // TODO: Implement isAccessTokenRevoked() method.
+        return $this->requireToken($tokenId)->isRevoked();
+    }
+
+    private function requireToken(string $tokenId): AccessToken
+    {
+        $token = $this->findByIdentifier($tokenId);
+        if ($token === null) {
+            throw new \Exception('Unknown token ' . $tokenId);
+        }
+
+        return $token;
     }
 }

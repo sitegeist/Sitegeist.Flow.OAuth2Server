@@ -15,7 +15,24 @@ use Doctrine\ORM\Mapping as ORM;
  *     name="sitegeist_flow_oauth2server_scope",
  * )
  */
-class FlowScopeEntity implements ScopeEntityInterface
+class Scope implements ScopeEntityInterface
 {
     use FlowIdentity, ScopeTrait;
+
+    /**
+     * @phpstan-var ?string
+     * @ORM\Column(type="text", nullable=true)
+     * @var string
+     */
+    protected $description;
+
+    public function setDescription(?string $description): void
+    {
+        $this->description = $description;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
 }

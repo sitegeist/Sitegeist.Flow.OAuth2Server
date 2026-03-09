@@ -11,16 +11,17 @@ use Neos\Flow\Annotations as Flow;
 use Neos\Flow\Persistence\Repository;
 
 /**
- * @method findOneByIdentifier(string $identifier): ?FlowScopeEntity
+ * @method ?Scope findOneByIdentifier(string $identifier)
+ * @method ?Scope findByIdentifier(string $identifier)
  */
 #[Flow\Scope('singleton')]
-class FlowScopeEntityRepository extends Repository implements ScopeRepositoryInterface
+class ScopeRepository extends Repository implements ScopeRepositoryInterface
 {
-    public function getScopeEntityByIdentifier($identifier): ?FlowScopeEntity
+    public function getScopeEntityByIdentifier($identifier): ?Scope
     {
         $scope = $this->findOneByIdentifier($identifier);
 
-        return $scope instanceof FlowScopeEntity ? $scope : null;
+        return $scope instanceof Scope ? $scope : null;
     }
 
     /**

@@ -21,17 +21,19 @@ use Neos\Utility\Arrays;
  *     }
  * )
  */
-class FlowClientEntity implements ClientEntityInterface
+class Client implements ClientEntityInterface
 {
     use FlowIdentity, ClientTrait;
 
     /**
+     * @phpstan-var ?string
      * @ORM\Column(type="string", nullable=true)
      * @var string
      */
     protected $secret;
 
     /**
+     * @phpstan-var ?string
      * @ORM\Column(type="string", nullable=true)
      * @var string
      */
@@ -57,12 +59,12 @@ class FlowClientEntity implements ClientEntityInterface
         $this->isConfidential = $secret !== null;
     }
 
-    public function setName($name): void
+    public function setName(?string $name): void
     {
         $this->name = $name;
     }
 
-    public function setRedirectUri($uri): void
+    public function setRedirectUri(string $uri): void
     {
         $this->redirectUri = $uri;
     }

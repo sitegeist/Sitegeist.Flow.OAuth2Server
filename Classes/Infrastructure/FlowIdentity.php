@@ -8,7 +8,7 @@ use Neos\Flow\Annotations as Flow;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @property string Persistence_Object_Identifier
+ * @property string $Persistence_Object_Identifier
  */
 trait FlowIdentity
 {
@@ -24,13 +24,14 @@ trait FlowIdentity
         return $this->identifier;
     }
 
-    public function setIdentifier($identifier): void
+    public function setIdentifier(string $identifier): void
     {
         $this->identifier = $identifier;
     }
 
     public function getPersistenceObjectIdentifier(): string
     {
+        /** @phpstan-ignore-next-line (magic property ¯\_(ツ)_/¯) */
         return $this->Persistence_Object_Identifier;
     }
 }
